@@ -8,14 +8,17 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var catalogRouter = require('./routes/catalog');  //Import routes for "catalog" area of site
 var compression = require('compression');
+var helmet = require('helmet');
 
 var app = express();
+app.use(helmet());
 
 //Import the mongoose module
 var mongoose = require('mongoose');
 
-//Set up default mongoose connection
-var mongoDB = 'mongodb+srv://shafinrizvi:Manifest20@cluster0-spstf.mongodb.net/local_library?retryWrites=true&w=majority';
+// Set up mongoose connection
+var dev_db_url = 'mongodb+srv://cooluser:coolpassword@cluster0-mbdj7.mongodb.net/local_library?retryWrites=true'
+var mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 
 //Get the default connection
